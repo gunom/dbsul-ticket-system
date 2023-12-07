@@ -1,0 +1,22 @@
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/dp_ticket?useSSL=false&serverTimezone=UTC
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+        hibernate:
+            ddl-auto: none
+        show-sql: true
+        properties:
+            hibernate:
+                format_sql: true
+                use_sql_comments: true
+                default_batch_fetch_size: 100
+                jdbc.batch_size: 100
+                order_inserts: true
+                order_updates: true
+                jdbc.time_zone: UTC
+jwt:
+    secret: secretsecretsecretsecretsecret
+    access-expires-in: 3600000
