@@ -6,6 +6,7 @@ import com.ticket.dbsulticketsystem.domain.SecurityUser
 import com.ticket.dbsulticketsystem.service.ReservationService
 import com.ticket.dbsulticketsystem.service.dto.ReservationInfo
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+@PreAuthorize("hasRole('ROLE_USER')")
 @RestController
 @RequestMapping("/reservation")
 class ReservationController(

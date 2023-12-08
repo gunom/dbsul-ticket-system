@@ -40,6 +40,7 @@ class GoodsServiceImpl(
     ) = GoodsInfo.GoodsDto(
         id = it.id,
         title = it.title,
+        placeId = it.place?.id,
         placeName = it.place?.name,
         startDate = it.startDate,
         endDate = it.endDate,

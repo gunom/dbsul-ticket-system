@@ -21,6 +21,7 @@ class RecommendGoodsServiceImpl(
                     endDate = it.endDate,
                     genreName = it.genre?.genreName,
                     goodsImageUrl = it.goodsImageUrl,
+                    placeName = it.place?.name,
                 )
             }
     }

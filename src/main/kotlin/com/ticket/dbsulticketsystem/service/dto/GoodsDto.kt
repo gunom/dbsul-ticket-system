@@ -9,6 +9,7 @@ public class GoodsInfo {
     data class GoodsDto(
         val id: Int = 0,
         val title: String? = null,
+        val placeId: Int? = null,
         val placeName: String? = null,
         val startDate: LocalDate? = null,
         val endDate: LocalDate? = null,
