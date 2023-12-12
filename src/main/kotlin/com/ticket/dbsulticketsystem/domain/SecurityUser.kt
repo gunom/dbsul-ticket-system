@@ -21,6 +21,10 @@ class SecurityUser(private val user: User) : UserDetails {
         return user.id
     }
 
+    fun getSeller(): Boolean {
+        return user.isSeller
+    }
+
     override fun isAccountNonExpired(): Boolean {
         return true
     }

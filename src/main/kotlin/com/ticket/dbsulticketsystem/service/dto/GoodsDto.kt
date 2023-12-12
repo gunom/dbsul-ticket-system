@@ -25,7 +25,7 @@ public class GoodsInfo {
         val maxBooking: Int? = null,
         val createdAt: LocalDateTime? = null,
         val updatedAt: LocalDateTime? = null,
-        val sequenceList: List<SequenceDto> = emptyList(),
+        val sequenceList: List<SequenceInfo.SequenceDto> = emptyList(),
     ) : Serializable
 
     data class GoodsSimpleDto(

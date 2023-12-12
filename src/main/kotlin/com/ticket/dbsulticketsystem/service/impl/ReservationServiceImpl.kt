@@ -8,7 +8,7 @@ import com.ticket.dbsulticketsystem.repository.SequenceRepository
 import com.ticket.dbsulticketsystem.service.ReservationService
 import com.ticket.dbsulticketsystem.service.dto.GoodsInfo
 import com.ticket.dbsulticketsystem.service.dto.ReservationInfo
-import com.ticket.dbsulticketsystem.service.dto.SequenceDto
+import com.ticket.dbsulticketsystem.service.dto.SequenceInfo
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -23,8 +23,7 @@ class ReservationServiceImpl(
     override fun getReservationList(userId: Int): List<ReservationInfo.ReservationDto> {
         return reservationRepository.findAllByUserId(userId).map {
             val sequence = sequenceRepository.findById(it.sequenceId).get()
-            val sequenceDto = SequenceDto(
-                id = sequence.id,
+            val sequenceDto = SequenceInfo.SequenceDto(
                 date = sequence.date,
                 time = sequence.time,
                 isFree = sequence.isFree,
@@ -37,11 +36,7 @@ class ReservationServiceImpl(
                 id = it.id,
                 userId = it.userId,
                 sequence = sequenceDto,
-                goods = GoodsInfo.GoodsDto(
-                    id = goods.id,
-                    title = goods.title,
-                    goodsImageUrl = goods.goodsImageUrl,
-                ),
+                goodsName = goods.title,
                 seatRow = seat.seatRow,
                 seatColumn = seat.seatCol,
                 placeName = goods.place?.name,
@@ -51,11 +46,10 @@ class ReservationServiceImpl(
         }
     }
 
-    override fun getReservation(id: Int): ReservationInfo.ReservationDto {
+    override fun getReservation(id: Int): ReservationInfo.ReservationSimpleDto {
         val reservation = reservationRepository.findById(id).orElseThrow()
         val sequence = sequenceRepository.findById(reservation.sequenceId).get()
-        val sequenceDto = SequenceDto(
-            id = sequence.id,
+        val sequenceDto = SequenceInfo.SequenceDto(
             date = sequence.date,
             time = sequence.time,
             isFree = sequence.isFree,
@@ -64,18 +58,13 @@ class ReservationServiceImpl(
         )
         val goods = goodsRepository.findById(sequence.goodsId).orElseThrow()
         val seat = seatRepository.findById(reservation.seatId).orElseThrow()
-        return ReservationInfo.ReservationDto(
+        return ReservationInfo.ReservationSimpleDto(
             id = reservation.id,
             userId = reservation.userId,
-            sequence = sequenceDto,
-            goods = GoodsInfo.GoodsDto(
-                id = goods.id,
-                title = goods.title,
-                goodsImageUrl = goods.goodsImageUrl,
-            ),
+            date = sequence.date,
+            time = sequence.time,
             seatRow = seat.seatRow,
             seatColumn = seat.seatCol,
-            placeName = goods.place?.name,
             createdAt = reservation.createdAt,
             updatedAt = reservation.updatedAt,
         )

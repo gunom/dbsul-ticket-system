@@ -31,6 +31,9 @@ open class User (
     @Column(name = "name")
     open var name: String? = null,
 
+    @Column(name = "is_seller")
+    open var isSeller: Boolean = false,
+
     @Column(name = "created_at")
     open var createdAt: LocalDateTime? = LocalDateTime.now(),
 

@@ -32,7 +32,6 @@ class AuthServiceImpl(
         if (existUser != null) {
             throw Exception("이미 존재하는 사용자입니다.")
         }
-        // bcrypt 암호화
         val encodedPassword = passwordEncoder.encode(password)
         val user = userRepository.save(User(email = email, password = encodedPassword))
         return jwtTokenProvider.generateAccessToken(UsernamePasswordAuthenticationToken(SecurityUser(user), null))

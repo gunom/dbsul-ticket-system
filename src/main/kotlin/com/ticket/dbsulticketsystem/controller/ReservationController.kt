@@ -33,7 +33,7 @@ class ReservationController(
     }
 
     @GetMapping("/detail/{id}")
-    fun detail(@PathVariable id: Int): ResponseEntity<ReservationInfo.ReservationDto> {
+    fun detail(@PathVariable id: Int): ResponseEntity<ReservationInfo.ReservationSimpleDto> {
         val reservation = reservationService.getReservation(id)
         return ResponseEntity.ok(reservation)
     }

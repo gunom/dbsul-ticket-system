@@ -11,7 +11,7 @@ open class Sequence {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open var id: Int? = null
+    open var id: Int = 0
 
     @Column(name = "goods_id")
     open var goodsId: Int = 0

@@ -11,60 +11,60 @@ import javax.persistence.*
         Index(name = "title", columnList = "title", unique = true)
     ]
 )
-open class Goods {
+open class Goods (
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open var id: Int = 0
+    open var id: Int = 0,
 
     @Column(name = "title")
-    open var title: String? = null
+    open var title: String? = null,
 
     @OneToOne
     @JoinColumn(name = "place_id")
-    open var place: Place? = null
+    open var place: Place? = null,
 
     @Column(name = "start_date")
-    open var startDate: LocalDate? = null
+    open var startDate: LocalDate? = null,
 
     @Column(name = "end_date")
-    open var endDate: LocalDate? = null
+    open var endDate: LocalDate? = null,
 
     @OneToOne
     @JoinColumn(name = "genre_id")
-    open var genre: Genre? = null
+    open var genre: Genre? = null,
 
     @Column(name = "viewRate", precision = 5, scale = 2)
-    open var viewRate: BigDecimal? = null
+    open var viewRate: BigDecimal? = null,
 
     @Column(name = "goods_image_url")
-    open var goodsImageUrl: String? = null
+    open var goodsImageUrl: String? = null,
 
     @Lob
     @Column(name = "goods_info")
-    open var goodsInfo: String? = null
+    open var goodsInfo: String? = null,
 
     @Column(name = "sales_info")
-    open var salesInfo: String? = null
+    open var salesInfo: String? = null,
 
     @Column(name = "running_time")
-    open var runningTime: Int? = null
+    open var runningTime: Int? = null,
 
     @Column(name = "inter_mission_time")
-    open var interMissionTime: Int? = null
+    open var interMissionTime: Int? = null,
 
     @Column(name = "ticket_open_date")
-    open var ticketOpenDate: LocalDate? = null
+    open var bookingOpenDate: LocalDate? = null,
 
     @Column(name = "booking_end_date")
-    open var bookingEndDate: LocalDate? = null
+    open var bookingEndDate: LocalDate? = null,
 
     @Column(name = "max_booking")
-    open var maxBooking: Int? = null
+    open var maxBooking: Int? = null,
 
     @Column(name = "created_at")
-    open var createdAt: LocalDateTime? = null
+    open var createdAt: LocalDateTime? = null,
 
     @Column(name = "updated_at")
-    open var updatedAt: LocalDateTime? = null
-}
+    open var updatedAt: LocalDateTime? = null,
+)

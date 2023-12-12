@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface SequenceRepository : JpaRepository<Sequence, Int> {
     fun findAllByGoodsId(id: Int): List<Sequence>
+    fun findAllByGoodsIdIn(goodsIds: List<Int>): List<Sequence>
 }
