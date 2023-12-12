@@ -39,7 +39,7 @@ class ReservationServiceImpl(
                 goodsName = goods.title,
                 seatRow = seat.seatRow,
                 seatColumn = seat.seatCol,
-                placeName = goods.place?.name,
+                placeName = goods.place.name,
                 createdAt = it.createdAt,
                 updatedAt = it.updatedAt,
             )

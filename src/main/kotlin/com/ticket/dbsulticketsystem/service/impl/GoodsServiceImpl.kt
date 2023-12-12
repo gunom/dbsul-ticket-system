@@ -1,11 +1,13 @@
 package com.ticket.dbsulticketsystem.service.impl
 
 import com.ticket.dbsulticketsystem.domain.Goods
+import com.ticket.dbsulticketsystem.domain.Section
 import com.ticket.dbsulticketsystem.domain.Sequence
 import com.ticket.dbsulticketsystem.domain.UserGood
 import com.ticket.dbsulticketsystem.repository.*
 import com.ticket.dbsulticketsystem.service.GoodsService
 import com.ticket.dbsulticketsystem.service.dto.GoodsInfo
+import com.ticket.dbsulticketsystem.service.dto.PriceInfo
 import com.ticket.dbsulticketsystem.service.dto.ReservationInfo
 import com.ticket.dbsulticketsystem.service.dto.SequenceInfo
 import org.springframework.data.domain.PageRequest
@@ -22,6 +24,7 @@ class GoodsServiceImpl(
     private val userGoodRepository: UserGoodRepository,
     private val reservationRepository: ReservationRepository,
     private val seatRepository: SeatRepository,
+    private val sectionRepository: SectionRepository,
 ) : GoodsService {
 
     override fun getGoodsList(genreId: Int): List<GoodsInfo.GoodsSimpleDto> {
@@ -34,7 +37,7 @@ class GoodsServiceImpl(
                 endDate = it.endDate,
                 genreName = it.genre?.genreName,
                 goodsImageUrl = it.goodsImageUrl,
-                placeName = it.place?.name,
+                placeName = it.place.name,
             )
         }
         return dto
@@ -43,11 +46,12 @@ class GoodsServiceImpl(
     private fun makeGoodsDto(
         it: Goods,
         sequence: List<Sequence>,
+        section: List<Section>,
     ) = GoodsInfo.GoodsDto(
         id = it.id,
         title = it.title,
-        placeId = it.place?.id,
-        placeName = it.place?.name,
+        placeId = it.place.id,
+        placeName = it.place.name,
         startDate = it.startDate,
         endDate = it.endDate,
         genreName = it.genre?.genreName,
@@ -70,13 +74,20 @@ class GoodsServiceImpl(
                 createdAt = s.createdAt,
                 updatedAt = s.updatedAt,
             )
+        },
+        priceList = section.map { s ->
+            PriceInfo.PriceDto(
+                grade = s.grade,
+                price = s.price,
+            )
         }
     )
 
     override fun getGoods(goodsId: Int): GoodsInfo.GoodsDto {
         val goods = goodsRepository.findById(goodsId).orElseThrow()
         val sequence = sequenceRepository.findAllByGoodsId(goodsId)
-        return makeGoodsDto(goods, sequence)
+        val section = sectionRepository.findAllByPlaceId(goods.place.id)
+        return makeGoodsDto(goods, sequence, section)
     }
 
     override fun getPopularGoodsList(genreId: Int): List<GoodsInfo.GoodsSimpleDto> {
@@ -97,7 +108,7 @@ class GoodsServiceImpl(
                     endDate = it.endDate,
                     genreName = it.genre?.genreName,
                     goodsImageUrl = it.goodsImageUrl,
-                    placeName = it.place?.name,
+                    placeName = it.place.name,
                 )
             }
     }
@@ -173,7 +184,7 @@ class GoodsServiceImpl(
         return SequenceInfo.SequenceWithReservationDto(
             id = sequenceId,
             goodsName = goods.title,
-            placeName = goods.place?.name,
+            placeName = goods.place.name,
             date = sequence.date,
             time = sequence.time,
             reservationList = reservationList.map {

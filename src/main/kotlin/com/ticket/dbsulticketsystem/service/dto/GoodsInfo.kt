@@ -26,6 +26,7 @@ public class GoodsInfo {
         val createdAt: LocalDateTime? = null,
         val updatedAt: LocalDateTime? = null,
         val sequenceList: List<SequenceInfo.SequenceDto> = emptyList(),
+        val priceList: List<PriceInfo.PriceDto> = emptyList(),
     ) : Serializable
 
     data class GoodsSimpleDto(

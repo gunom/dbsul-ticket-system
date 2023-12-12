@@ -22,7 +22,7 @@ open class Goods (
 
     @OneToOne
     @JoinColumn(name = "place_id")
-    open var place: Place? = null,
+    open var place: Place = Place(),
 
     @Column(name = "start_date")
     open var startDate: LocalDate? = null,

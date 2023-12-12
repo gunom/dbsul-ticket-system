@@ -16,10 +16,10 @@ open class Section {
     open var placeId: Int? = null
 
     @Column(name = "grade")
-    open var grade: String? = null
+    open var grade: String = ""
 
     @Column(name = "price", precision = 10, scale = 2)
-    open var price: BigDecimal? = null
+    open var price: BigDecimal = BigDecimal.ZERO
 
     @Column(name = "start_row")
     open var startRow: Int? = null
