@@ -5,8 +5,8 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "place_price", schema = "dp_ticket")
-open class PlacePrice {
+@Table(name = "section", schema = "dp_ticket")
+open class Section {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
