@@ -20,7 +20,7 @@ open class Answer {
     @JoinColumn(name = "question_id")
     open var question: com.ticket.dbsulticketsystem.domain.Question? = null
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "user_id")
     open var user: com.ticket.dbsulticketsystem.domain.User? = null
 

@@ -191,7 +191,7 @@ class GoodsServiceImpl(
                 val seat = seatRepository.findById(it.seatId).orElseThrow()
                 ReservationInfo.ReservationSimpleDto(
                     id = it.id,
-                    userId = it.userId,
+                    userId = it.user?.id,
                     seatRow = seat.seatRow,
                     seatColumn = seat.seatCol,
                     createdAt = it.createdAt,

@@ -4,4 +4,5 @@ interface AuthService {
 
     fun login(email: String, password: String): String
     fun signup(email: String, password: String): String
+    fun signout(id: Int)
 }

@@ -1,10 +1,7 @@
 package com.ticket.dbsulticketsystem.service.impl
 
 import com.ticket.dbsulticketsystem.domain.Reservation
-import com.ticket.dbsulticketsystem.repository.GoodsRepository
-import com.ticket.dbsulticketsystem.repository.ReservationRepository
-import com.ticket.dbsulticketsystem.repository.SeatRepository
-import com.ticket.dbsulticketsystem.repository.SequenceRepository
+import com.ticket.dbsulticketsystem.repository.*
 import com.ticket.dbsulticketsystem.service.ReservationService
 import com.ticket.dbsulticketsystem.service.dto.GoodsInfo
 import com.ticket.dbsulticketsystem.service.dto.ReservationInfo
@@ -17,7 +14,7 @@ class ReservationServiceImpl(
     private val reservationRepository: ReservationRepository,
     private val seatRepository: SeatRepository,
     private val sequenceRepository: SequenceRepository,
-    private val goodsRepository: GoodsRepository,
+    private val goodsRepository: GoodsRepository, private val userRepository: UserRepository,
 ) : ReservationService {
 
     override fun getReservationList(userId: Int): List<ReservationInfo.ReservationDto> {
@@ -34,7 +31,7 @@ class ReservationServiceImpl(
             val seat = seatRepository.findById(it.seatId).orElseThrow()
             ReservationInfo.ReservationDto(
                 id = it.id,
-                userId = it.userId,
+                userId = it.user?.id,
                 sequence = sequenceDto,
                 goodsName = goods.title,
                 seatRow = seat.seatRow,
@@ -49,18 +46,11 @@ class ReservationServiceImpl(
     override fun getReservation(id: Int): ReservationInfo.ReservationSimpleDto {
         val reservation = reservationRepository.findById(id).orElseThrow()
         val sequence = sequenceRepository.findById(reservation.sequenceId).get()
-        val sequenceDto = SequenceInfo.SequenceDto(
-            date = sequence.date,
-            time = sequence.time,
-            isFree = sequence.isFree,
-            createdAt = sequence.createdAt,
-            updatedAt = sequence.updatedAt,
-        )
-        val goods = goodsRepository.findById(sequence.goodsId).orElseThrow()
+
         val seat = seatRepository.findById(reservation.seatId).orElseThrow()
         return ReservationInfo.ReservationSimpleDto(
             id = reservation.id,
-            userId = reservation.userId,
+            userId = reservation.user?.id,
             date = sequence.date,
             time = sequence.time,
             seatRow = seat.seatRow,
@@ -72,7 +62,9 @@ class ReservationServiceImpl(
     }
 
     override fun cancelReservation(id: Int) {
-        reservationRepository.deleteById(id)
+        val reservation = reservationRepository.findById(id).orElseThrow()
+        reservation.isCanceled = true
+        reservationRepository.save(reservation)
     }
 
     @Transactional
@@ -84,6 +76,8 @@ class ReservationServiceImpl(
         placeId: Int,
     ) {
         val existSeat = seatRepository.findBySeatRowAndSeatCol(seatRow, seatColumn)
+
+        val user = userRepository.findById(userId).orElseThrow()
         if (existSeat == null) {
             val seat = seatRepository.save(
                 com.ticket.dbsulticketsystem.domain.Seat(
@@ -94,7 +88,7 @@ class ReservationServiceImpl(
             )
             reservationRepository.save(
                 Reservation(
-                    userId = userId,
+                    user = user,
                     sequenceId = sequenceId,
                     seatId = seat.id,
                 )
@@ -105,9 +99,10 @@ class ReservationServiceImpl(
             if (reservation != null) {
                 throw Exception("이미 예약된 좌석입니다.")
             }
+
             reservationRepository.save(
                 Reservation(
-                    userId = userId,
+                    user = user,
                     sequenceId = sequenceId,
                     seatId = existSeat.id,
                 )

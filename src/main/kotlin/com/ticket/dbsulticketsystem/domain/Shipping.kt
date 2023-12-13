@@ -15,7 +15,7 @@ open class Shipping {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     open var id: Int? = null
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "user_id")
     open var user: com.ticket.dbsulticketsystem.domain.User? = null
 

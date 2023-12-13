@@ -27,7 +27,7 @@ interface GoodsService {
         sequenceTime: List<SequenceInfo.SequenceDto>
     )
 
-    fun getSellerGoodsList(id: Int): List<GoodsInfo.GoodsSimpleDto>
+    fun getSellerGoodsList(userId: Int): List<GoodsInfo.GoodsSimpleDto>
     fun getGoodsDetailAndReservation(
         userId: Int,
         sequenceId: Int,

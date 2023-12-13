@@ -36,4 +36,8 @@ class AuthServiceImpl(
         val user = userRepository.save(User(email = email, password = encodedPassword))
         return jwtTokenProvider.generateAccessToken(UsernamePasswordAuthenticationToken(SecurityUser(user), null))
     }
+
+    override fun signout(id: Int) {
+        userRepository.deleteById(id)
+    }
 }

@@ -17,8 +17,9 @@ open class Reservation (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     open var id: Int? = null,
 
-    @Column(name = "user_id")
-    open var userId: Int? = null,
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JoinColumn(name = "user_id")
+    open var user: User? = null,
 
     @Column(name = "sequence_id")
     open var sequenceId: Int = 0,

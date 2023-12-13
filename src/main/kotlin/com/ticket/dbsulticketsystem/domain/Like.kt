@@ -16,7 +16,7 @@ open class Like (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     open var id: Int? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "user_id")
     open var user: com.ticket.dbsulticketsystem.domain.User? = null,
 
@@ -28,5 +28,5 @@ open class Like (
     open var createdAt: LocalDateTime? = null,
 
     @Column(name = "updated_at")
-    open var updatedAt: LocalDateTime? = null
+    open var updatedAt: LocalDateTime? = null,
 )

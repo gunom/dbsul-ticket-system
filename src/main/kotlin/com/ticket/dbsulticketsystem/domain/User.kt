@@ -10,7 +10,7 @@ import javax.persistence.*
         Index(name = "email", columnList = "email", unique = true)
     ]
 )
-open class User (
+open class User(
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,4 +39,4 @@ open class User (
 
     @Column(name = "updated_at")
     open var updatedAt: LocalDateTime? = LocalDateTime.now(),
-    )
+)
